@@ -1,353 +1,399 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sistema para Distribuidoras | Gestão Completa</title>
-  <meta name="description" content="Sistema completo para distribuidoras de bebidas, tabacos e artigos de fumo. Controle pedidos, estoque, fiado e caixa. Sem mensalidade, funciona offline." />
+  <meta name="description" content="Sistema completo para distribuidoras de bebidas, tabacos e artigos de fumo. Controle pedidos, estoque, fiado e caixa. R$ 30/mês com suporte incluso."/>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary: #1a56db;
-      --dark: #1e2a3a;
-      --text: #2d3748;
-      --light: #f0f4f8;
-      --white: #ffffff;
-      --success: #38a169;
-      --accent: #f6ad55;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --green:  #39ff14;
+      --cyan:   #00d4ff;
+      --yellow: #ffe44d;
+      --bg:     #07101d;
+      --bg2:    #0d1a2b;
+      --card:   #0f1f33;
+      --border: rgba(0,212,255,.18);
+      --text:   #e2e8f0;
+      --muted:  #7a9ab8;
+      --white:  #ffffff;
     }
-    body { font-family: 'Segoe UI', Tahoma, sans-serif; color: var(--text); }
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+
+    /* ── utilitários ── */
+    .container{max-width:1000px;margin:0 auto;padding:0 20px;}
+    .neon-green{color:var(--green);text-shadow:0 0 12px var(--green);}
+    .neon-cyan {color:var(--cyan); text-shadow:0 0 12px var(--cyan);}
+    .neon-yellow{color:var(--yellow);text-shadow:0 0 10px var(--yellow);}
+
+    /* ── NAV ── */
+    nav{
+      position:sticky;top:0;z-index:100;
+      background:rgba(7,16,29,.92);
+      border-bottom:1px solid var(--border);
+      backdrop-filter:blur(12px);
+      padding:14px 20px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .nav-logo{display:flex;align-items:center;gap:10px;}
+    .nav-logo svg{width:36px;height:36px;}
+    .nav-logo span{font-weight:800;font-size:15px;color:var(--white);}
+    .nav-btn{
+      background:var(--green);color:#050d14;
+      padding:8px 20px;border-radius:8px;font-weight:700;font-size:13px;
+      text-decoration:none;transition:box-shadow .2s;
+      box-shadow:0 0 14px rgba(57,255,20,.35);
+    }
+    .nav-btn:hover{box-shadow:0 0 24px rgba(57,255,20,.65);}
 
     /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, #1e2a3a 0%, #1a56db 100%);
-      color: white;
-      padding: 60px 20px 80px;
-      text-align: center;
+    .hero{
+      padding:80px 20px 90px;text-align:center;
+      background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26,86,219,.22) 0%, transparent 70%);
+      position:relative;overflow:hidden;
     }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      margin-bottom: 20px;
-      letter-spacing: 0.5px;
+    .hero::before{
+      content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);
+      width:600px;height:600px;border-radius:50%;
+      background:radial-gradient(circle, rgba(0,212,255,.07) 0%, transparent 70%);
+      pointer-events:none;
     }
-    .hero h1 {
-      font-size: clamp(28px, 5vw, 48px);
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 16px;
+    .hero-icon{margin-bottom:28px;display:inline-block;}
+    .hero-icon svg{width:100px;height:100px;filter:drop-shadow(0 0 20px rgba(0,212,255,.5));}
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);
+      padding:6px 18px;border-radius:20px;font-size:13px;color:var(--cyan);
+      margin-bottom:22px;font-weight:600;
     }
-    .hero h1 span { color: var(--accent); }
-    .hero p {
-      font-size: clamp(15px, 2.5vw, 18px);
-      opacity: 0.85;
-      max-width: 560px;
-      margin: 0 auto 32px;
-      line-height: 1.6;
+    .hero h1{
+      font-size:clamp(32px,6vw,56px);font-weight:900;line-height:1.1;
+      color:var(--white);margin-bottom:18px;
     }
-    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn-hero {
-      padding: 14px 28px;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    .hero p{
+      font-size:clamp(15px,2.5vw,18px);color:var(--muted);
+      max-width:560px;margin:0 auto 36px;
     }
-    .btn-whats { background: #25D366; color: white; }
-    .btn-whats:hover { background: #128C7E; }
-    .btn-outline { background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.4); }
-    .btn-outline:hover { background: rgba(255,255,255,0.2); }
+    .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+    .btn-primary{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--green);color:#050d14;
+      padding:14px 28px;border-radius:10px;font-size:15px;font-weight:800;
+      text-decoration:none;transition:all .2s;
+      box-shadow:0 0 20px rgba(57,255,20,.4);
+    }
+    .btn-primary:hover{box-shadow:0 0 36px rgba(57,255,20,.7);transform:translateY(-2px);}
+    .btn-secondary{
+      display:inline-flex;align-items:center;gap:8px;
+      background:transparent;color:var(--cyan);
+      border:1.5px solid rgba(0,212,255,.4);
+      padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;
+      text-decoration:none;transition:all .2s;
+    }
+    .btn-secondary:hover{background:rgba(0,212,255,.08);border-color:var(--cyan);}
+
+    /* ── SEÇÃO GENÉRICA ── */
+    section{padding:70px 20px;}
+    .section-label{
+      display:inline-block;
+      background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);
+      color:var(--cyan);padding:4px 14px;border-radius:20px;
+      font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+      margin-bottom:14px;
+    }
+    h2.section-title{font-size:clamp(24px,4vw,36px);font-weight:800;color:var(--white);margin-bottom:10px;}
+    p.section-sub{font-size:15px;color:var(--muted);margin-bottom:48px;}
 
     /* ── DOR ── */
-    .dor-section {
-      background: #fff8f0;
-      padding: 60px 20px;
-      text-align: center;
-      border-top: 4px solid var(--accent);
+    .dor{background:var(--bg2);}
+    .dor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+    .dor-card{
+      background:var(--card);border:1px solid rgba(255,100,0,.2);
+      border-radius:14px;padding:22px 18px;
     }
-    .dor-section h2 { font-size: 26px; color: var(--dark); margin-bottom: 8px; }
-    .dor-section p { color: #666; margin-bottom: 36px; font-size: 15px; }
-    .dor-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .dor-card {
-      background: white;
-      border: 2px solid #fed7aa;
-      border-radius: 12px;
-      padding: 20px 16px;
-      font-size: 14px;
-      color: #744210;
-    }
-    .dor-card .emoji { font-size: 32px; margin-bottom: 10px; }
-    .dor-card strong { display: block; font-size: 15px; margin-bottom: 4px; }
+    .dor-card .emoji{font-size:30px;margin-bottom:10px;}
+    .dor-card strong{display:block;font-size:14px;color:var(--white);margin-bottom:6px;}
+    .dor-card p{font-size:13px;color:var(--muted);}
 
     /* ── FEATURES ── */
-    .features {
-      padding: 70px 20px;
-      text-align: center;
-      background: var(--white);
+    .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+    .feat-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:14px;padding:26px 22px;
+      transition:border-color .2s,box-shadow .2s;
     }
-    .section-label {
-      display: inline-block;
-      background: #e8f0fe;
-      color: var(--primary);
-      padding: 5px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
+    .feat-card:hover{
+      border-color:rgba(0,212,255,.4);
+      box-shadow:0 0 24px rgba(0,212,255,.1);
     }
-    .features h2 { font-size: 30px; color: var(--dark); margin-bottom: 8px; }
-    .features > p { color: #666; margin-bottom: 48px; font-size: 15px; }
-    .feat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .feat-card {
-      background: var(--light);
-      border-radius: 14px;
-      padding: 28px 22px;
-      text-align: left;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .feat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-    .feat-icon { font-size: 36px; margin-bottom: 14px; display: block; }
-    .feat-card h3 { font-size: 16px; color: var(--dark); margin-bottom: 6px; }
-    .feat-card p { font-size: 13px; color: #555; line-height: 1.6; }
+    .feat-icon{font-size:32px;margin-bottom:12px;display:block;}
+    .feat-card h3{font-size:15px;color:var(--white);margin-bottom:6px;font-weight:700;}
+    .feat-card p{font-size:13px;color:var(--muted);}
 
     /* ── COMO FUNCIONA ── */
-    .how {
-      background: var(--dark);
-      color: white;
-      padding: 70px 20px;
-      text-align: center;
+    .how{background:var(--bg2);}
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
+    .step{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:14px;padding:28px 20px;text-align:center;
     }
-    .how h2 { font-size: 28px; margin-bottom: 8px; }
-    .how > p { opacity: 0.7; margin-bottom: 48px; font-size: 15px; }
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      max-width: 800px;
-      margin: 0 auto;
+    .step-num{
+      width:44px;height:44px;border-radius:50%;
+      background:linear-gradient(135deg,rgba(0,212,255,.2),rgba(57,255,20,.2));
+      border:2px solid var(--cyan);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:18px;color:var(--cyan);
+      margin:0 auto 14px;
+      box-shadow:0 0 14px rgba(0,212,255,.3);
     }
-    .step { background: rgba(255,255,255,0.07); border-radius: 14px; padding: 28px 20px; }
-    .step-num {
-      width: 40px; height: 40px;
-      background: var(--primary);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 18px;
-      margin: 0 auto 14px;
-    }
-    .step h3 { font-size: 15px; margin-bottom: 8px; }
-    .step p { font-size: 13px; opacity: 0.7; line-height: 1.5; }
+    .step h3{font-size:15px;color:var(--white);margin-bottom:8px;font-weight:700;}
+    .step p{font-size:13px;color:var(--muted);}
 
-    /* ── DIFERENCIAIS ── */
-    .diffs { padding: 60px 20px; background: var(--light); text-align: center; }
-    .diffs h2 { font-size: 26px; color: var(--dark); margin-bottom: 36px; }
-    .diff-list {
-      display: flex; flex-direction: column; gap: 12px;
-      max-width: 600px; margin: 0 auto;
+    /* ── PREÇO ── */
+    .preco-wrapper{
+      max-width:460px;margin:0 auto;
+      background:var(--card);
+      border:2px solid var(--green);
+      border-radius:20px;padding:40px 36px;text-align:center;
+      box-shadow:0 0 40px rgba(57,255,20,.15);
+      position:relative;
     }
-    .diff-item {
-      display: flex; align-items: center; gap: 14px;
-      background: white; padding: 16px 20px;
-      border-radius: 10px; text-align: left;
-      font-size: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    .preco-badge{
+      position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+      background:var(--green);color:#050d14;
+      padding:4px 20px;border-radius:20px;font-size:12px;font-weight:800;
+      white-space:nowrap;
     }
-    .diff-item .check {
-      width: 28px; height: 28px; min-width: 28px;
-      background: var(--success); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 14px; font-weight: 700;
+    .preco-valor{font-size:60px;font-weight:900;color:var(--green);line-height:1;text-shadow:0 0 20px rgba(57,255,20,.5);}
+    .preco-periodo{font-size:16px;color:var(--muted);margin-bottom:28px;}
+    .preco-lista{list-style:none;text-align:left;margin-bottom:32px;display:flex;flex-direction:column;gap:12px;}
+    .preco-lista li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);}
+    .preco-lista li span.check{color:var(--green);font-size:16px;font-weight:700;}
+    .preco-lista li span.check-cyan{color:var(--cyan);font-size:16px;font-weight:700;}
+
+    /* ── SUPORTE ── */
+    .suporte{background:var(--bg2);}
+    .suporte-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+    .suporte-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:14px;padding:22px 18px;text-align:center;
     }
+    .suporte-card .icon{font-size:36px;margin-bottom:12px;}
+    .suporte-card h3{font-size:15px;color:var(--white);margin-bottom:6px;font-weight:700;}
+    .suporte-card p{font-size:13px;color:var(--muted);}
 
     /* ── CTA ── */
-    .cta {
-      background: linear-gradient(135deg, #1a56db, #0f3fa8);
-      color: white; padding: 70px 20px; text-align: center;
+    .cta-section{
+      background:radial-gradient(ellipse 80% 80% at 50% 50%, rgba(26,86,219,.18) 0%, transparent 70%);
+      text-align:center;
     }
-    .cta h2 { font-size: 30px; margin-bottom: 10px; }
-    .cta p { opacity: 0.85; margin-bottom: 32px; font-size: 16px; }
-    .cta-box {
-      background: rgba(255,255,255,0.1);
-      border-radius: 16px; padding: 32px;
-      max-width: 440px; margin: 0 auto;
+    .cta-box{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:20px;padding:40px 32px;max-width:480px;margin:0 auto;
     }
-    .whats-btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: #25D366; color: white;
-      padding: 16px 32px; border-radius: 10px;
-      font-size: 17px; font-weight: 700;
-      text-decoration: none; margin-bottom: 16px;
-      width: 100%; justify-content: center;
-      transition: background 0.2s;
+    .whats-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      background:#25D366;color:white;
+      padding:16px 32px;border-radius:12px;
+      font-size:16px;font-weight:800;text-decoration:none;
+      width:100%;justify-content:center;margin-bottom:12px;
+      transition:all .2s;box-shadow:0 0 20px rgba(37,211,102,.3);
     }
-    .whats-btn:hover { background: #128C7E; }
-    .cta-info { font-size: 13px; opacity: 0.6; }
+    .whats-btn:hover{box-shadow:0 0 36px rgba(37,211,102,.55);transform:translateY(-2px);}
+    .cta-hint{font-size:12px;color:var(--muted);}
 
     /* ── FOOTER ── */
-    footer {
-      background: #111; color: rgba(255,255,255,0.4);
-      text-align: center; padding: 24px 20px; font-size: 13px;
+    footer{
+      background:#050d14;border-top:1px solid rgba(255,255,255,.06);
+      text-align:center;padding:28px 20px;
+      font-size:13px;color:var(--muted);
     }
-    footer strong { color: rgba(255,255,255,0.7); }
+    footer strong{color:rgba(255,255,255,.6);}
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-badge">🏪 Feito para distribuidoras do bairro</div>
-    <h1>Chega de caderno.<br>Sua distribuidora no <span>digital</span>.</h1>
-    <p>Sistema completo para controlar pedidos, estoque, fiado e caixa. Funciona offline, sem mensalidade e roda em qualquer computador.</p>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+      <defs>
+        <filter id="gG" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="gB" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="gY" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect x="43" y="10" width="10" height="6" rx="2" fill="none" stroke="#39ff14" stroke-width="2.5" filter="url(#gG)"/>
+      <line x1="48" y1="16" x2="48" y2="30" stroke="#39ff14" stroke-width="2.5" filter="url(#gG)" stroke-linecap="round"/>
+      <path d="M48 30 Q36 38 33 54" fill="none" stroke="#39ff14" stroke-width="2.5" stroke-linecap="round" filter="url(#gG)"/>
+      <path d="M48 30 Q60 38 63 54" fill="none" stroke="#39ff14" stroke-width="2.5" stroke-linecap="round" filter="url(#gG)"/>
+      <line x1="33" y1="54" x2="33" y2="94" stroke="#39ff14" stroke-width="2.5" filter="url(#gG)" stroke-linecap="round"/>
+      <line x1="63" y1="54" x2="63" y2="94" stroke="#39ff14" stroke-width="2.5" filter="url(#gG)" stroke-linecap="round"/>
+      <line x1="33" y1="94" x2="63" y2="94" stroke="#39ff14" stroke-width="2.5" filter="url(#gG)" stroke-linecap="round"/>
+      <rect x="38" y="64" width="20" height="14" rx="2" fill="none" stroke="#39ff14" stroke-width="1.8" filter="url(#gG)"/>
+      <path d="M72 36 L72 96 L98 96 L98 36 Z" fill="none" stroke="#00d4ff" stroke-width="2.5" stroke-linejoin="round" filter="url(#gB)"/>
+      <path d="M98 50 C112 50 112 82 98 82" fill="none" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round" filter="url(#gB)"/>
+      <path d="M70 36 Q77 24 85 34 Q92 22 100 36" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" filter="url(#gB)"/>
+      <line x1="10" y1="22" x2="16" y2="14" stroke="#ffe44d" stroke-width="2" stroke-linecap="round" filter="url(#gY)"/>
+      <line x1="14" y1="30" x2="22" y2="28" stroke="#ffe44d" stroke-width="2" stroke-linecap="round" filter="url(#gY)"/>
+      <line x1="10" y1="38" x2="18" y2="40" stroke="#ffe44d" stroke-width="1.5" stroke-linecap="round" filter="url(#gY)"/>
+    </svg>
+    <span>Sistema Distribuidoras</span>
+  </div>
+  <a href="https://wa.me/5511985079997?text=Oi!%20Quero%20saber%20mais%20sobre%20o%20sistema!" class="nav-btn">💬 Fale conosco</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      🏪 Feito para distribuidoras do bairro
+    </div>
+    <div class="hero-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+        <defs>
+          <filter id="hgG" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="hgB" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="hgY" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <rect width="120" height="120" fill="#07101d" rx="22"/>
+        <rect x="43" y="10" width="10" height="6" rx="2" fill="none" stroke="#39ff14" stroke-width="3" filter="url(#hgG)"/>
+        <line x1="48" y1="16" x2="48" y2="30" stroke="#39ff14" stroke-width="3" filter="url(#hgG)" stroke-linecap="round"/>
+        <path d="M48 30 Q36 38 33 54" fill="none" stroke="#39ff14" stroke-width="3" stroke-linecap="round" filter="url(#hgG)"/>
+        <path d="M48 30 Q60 38 63 54" fill="none" stroke="#39ff14" stroke-width="3" stroke-linecap="round" filter="url(#hgG)"/>
+        <line x1="33" y1="54" x2="33" y2="94" stroke="#39ff14" stroke-width="3" filter="url(#hgG)" stroke-linecap="round"/>
+        <line x1="63" y1="54" x2="63" y2="94" stroke="#39ff14" stroke-width="3" filter="url(#hgG)" stroke-linecap="round"/>
+        <line x1="33" y1="94" x2="63" y2="94" stroke="#39ff14" stroke-width="3" filter="url(#hgG)" stroke-linecap="round"/>
+        <rect x="38" y="64" width="20" height="14" rx="2" fill="none" stroke="#39ff14" stroke-width="2" filter="url(#hgG)"/>
+        <path d="M72 36 L72 96 L98 96 L98 36 Z" fill="none" stroke="#00d4ff" stroke-width="3" stroke-linejoin="round" filter="url(#hgB)"/>
+        <path d="M98 50 C112 50 112 82 98 82" fill="none" stroke="#00d4ff" stroke-width="3" stroke-linecap="round" filter="url(#hgB)"/>
+        <path d="M70 36 Q77 24 85 34 Q92 22 100 36" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" filter="url(#hgB)"/>
+        <line x1="10" y1="22" x2="16" y2="14" stroke="#ffe44d" stroke-width="2.5" stroke-linecap="round" filter="url(#hgY)"/>
+        <line x1="14" y1="30" x2="22" y2="28" stroke="#ffe44d" stroke-width="2.5" stroke-linecap="round" filter="url(#hgY)"/>
+        <line x1="10" y1="38" x2="18" y2="40" stroke="#ffe44d" stroke-width="2" stroke-linecap="round" filter="url(#hgY)"/>
+      </svg>
+    </div>
+    <h1>Chega de caderno.<br><span class="neon-green">Sua distribuidora</span> no digital.</h1>
+    <p>Sistema completo para controlar pedidos, estoque, fiado e caixa. Funciona offline, sem internet e por apenas <strong style="color:var(--yellow)">R$ 30/mês</strong>.</p>
     <div class="hero-btns">
-      <a href="https://wa.me/5511985079997?text=Oi!%20Quero%20uma%20demonstra%C3%A7%C3%A3o%20do%20sistema%20para%20distribuidoras." class="btn-hero btn-whats">
-        💬 Pedir demonstração grátis
+      <a href="https://wa.me/5511985079997?text=Oi!%20Quero%20uma%20demonstra%C3%A7%C3%A3o%20gratuita%20do%20sistema%20para%20distribuidoras." class="btn-primary">
+        💬 Ver demonstração grátis
       </a>
-      <a href="https://github.com/CaahRocha/sistema-distribuidoras" class="btn-hero btn-outline" target="_blank">
-        👩‍💻 Ver no GitHub
-      </a>
+      <a href="#preco" class="btn-secondary">Ver planos e preços</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- DOR -->
-  <section class="dor-section">
-    <h2>Sua distribuidora ainda sofre com isso? 😩</h2>
-    <p>Muitas distribuidoras da região ainda controlam tudo no caderno. Isso gera prejuízo.</p>
+<!-- DOR -->
+<section class="dor">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">😩 O problema</span>
+    <h2 class="section-title">Sua distribuidora ainda sofre com isso?</h2>
+    <p class="section-sub">O caderno gera prejuízo. É hora de resolver de vez.</p>
     <div class="dor-grid">
-      <div class="dor-card">
-        <div class="emoji">📓</div>
-        <strong>Caderno de fiado</strong>
-        Nunca sabe ao certo quanto cada cliente deve
-      </div>
-      <div class="dor-card">
-        <div class="emoji">📦</div>
-        <strong>Estoque no olho</strong>
-        Perde venda por não saber o que tem em estoque
-      </div>
-      <div class="dor-card">
-        <div class="emoji">🤯</div>
-        <strong>Sem relatório</strong>
-        Não sabe quanto faturou no mês ou o que mais vende
-      </div>
-      <div class="dor-card">
-        <div class="emoji">💸</div>
-        <strong>Caixa bagunçado</strong>
-        Dinheiro some sem saber de onde entrou ou saiu
-      </div>
+      <div class="dor-card"><div class="emoji">📓</div><strong>Caderno de fiado</strong><p>Nunca sabe ao certo quanto cada cliente deve</p></div>
+      <div class="dor-card"><div class="emoji">📦</div><strong>Estoque no olho</strong><p>Perde venda por não saber o que tem em estoque</p></div>
+      <div class="dor-card"><div class="emoji">🤯</div><strong>Sem relatório</strong><p>Não sabe quanto faturou no mês ou o que mais vende</p></div>
+      <div class="dor-card"><div class="emoji">💸</div><strong>Caixa bagunçado</strong><p>Dinheiro some sem saber de onde entrou ou saiu</p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FEATURES -->
-  <section class="features">
+<!-- FEATURES -->
+<section>
+  <div class="container" style="text-align:center;">
     <span class="section-label">✅ Funcionalidades</span>
-    <h2>Tudo que sua distribuidora precisa</h2>
-    <p>Sistema completo, simples de usar e sem custo de mensalidade.</p>
+    <h2 class="section-title">Tudo que sua distribuidora precisa</h2>
+    <p class="section-sub">Sistema completo, simples de usar. Funciona no seu computador, sem internet.</p>
     <div class="feat-grid">
-      <div class="feat-card">
-        <span class="feat-icon">🛒</span>
-        <h3>Pedidos rápidos</h3>
-        <p>Registre pedidos com código de barras ou busca por nome. Fecha em segundos com dinheiro, pix, cartão ou fiado.</p>
-      </div>
-      <div class="feat-card">
-        <span class="feat-icon">📦</span>
-        <h3>Estoque automático</h3>
-        <p>A cada pedido fechado o estoque baixa sozinho. Alerta quando o produto está acabando.</p>
-      </div>
-      <div class="feat-card">
-        <span class="feat-icon">📋</span>
-        <h3>Fiado organizado</h3>
-        <p>Veja quanto cada cliente deve, registre pagamentos parciais e controle o limite de crédito.</p>
-      </div>
-      <div class="feat-card">
-        <span class="feat-icon">💰</span>
-        <h3>Caixa do dia</h3>
-        <p>Acompanhe entradas e saídas. Saldo em tempo real separado por forma de pagamento.</p>
-      </div>
-      <div class="feat-card">
-        <span class="feat-icon">📊</span>
-        <h3>Relatórios completos</h3>
-        <p>Vendas por período, produtos mais vendidos, valor do estoque e clientes com fiado em aberto.</p>
-      </div>
-      <div class="feat-card">
-        <span class="feat-icon">👥</span>
-        <h3>Acesso por perfil</h3>
-        <p>Perfil Admin e Caixa com permissões separadas. Admin vê tudo, caixa só opera o dia a dia.</p>
-      </div>
+      <div class="feat-card"><span class="feat-icon">🛒</span><h3>Pedidos rápidos</h3><p>Registre pedidos com código de barras ou busca por nome. Fecha em segundos com dinheiro, pix, cartão ou fiado.</p></div>
+      <div class="feat-card"><span class="feat-icon">📦</span><h3>Estoque automático</h3><p>A cada pedido fechado o estoque baixa sozinho. Alerta quando o produto está acabando.</p></div>
+      <div class="feat-card"><span class="feat-icon">📋</span><h3>Fiado organizado</h3><p>Veja quanto cada cliente deve, registre pagamentos parciais e controle o limite de crédito.</p></div>
+      <div class="feat-card"><span class="feat-icon">💰</span><h3>Caixa do dia</h3><p>Acompanhe entradas e saídas. Saldo em tempo real separado por forma de pagamento.</p></div>
+      <div class="feat-card"><span class="feat-icon">📊</span><h3>Relatório por email</h3><p>Relatório do dia enviado direto pro seu email ao fechar o caixa. Sem precisar estar no computador.</p></div>
+      <div class="feat-card"><span class="feat-icon">👥</span><h3>Perfis de acesso</h3><p>Admin vê tudo e controla o sistema. Caixa só acessa o que precisa pro dia a dia.</p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- COMO FUNCIONA -->
-  <section class="how">
-    <h2>Como funciona?</h2>
-    <p>Instalação simples, sem internet, sem mensalidade.</p>
+<!-- COMO FUNCIONA -->
+<section class="how">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">⚙️ Como funciona</span>
+    <h2 class="section-title">Instala uma vez, usa pra sempre</h2>
+    <p class="section-sub">Instalação feita pela nossa equipe. Você só começa a usar.</p>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Instala uma vez</h3>
-        <p>Roda no computador da distribuidora. Sem internet necessária para funcionar.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Cadastra os produtos</h3>
-        <p>Com nome, preço, estoque e código de barras. Categorias como bebidas, cigarros, tabacos.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Começa a usar</h3>
-        <p>Abre pedido, bipa os produtos, fecha com pagamento. Outros PCs da rede também acessam.</p>
-      </div>
+      <div class="step"><div class="step-num">1</div><h3>Instalação</h3><p>Instalamos o sistema no computador da distribuidora. Sem depender de internet.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Configuração</h3><p>Cadastramos os produtos, categorias e usuários junto com você.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Treinamento</h3><p>Mostramos como usar pedidos, estoque, fiado e relatórios.</p></div>
+      <div class="step"><div class="step-num">4</div><h3>Usando!</h3><p>Outros computadores da rede também acessam. Suporte contínuo incluso.</p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- DIFERENCIAIS -->
-  <section class="diffs">
-    <h2>Por que escolher este sistema?</h2>
-    <div class="diff-list">
-      <div class="diff-item"><div class="check">✓</div><span><strong>Sem mensalidade</strong> — pagamento único, sem surpresas no bolso</span></div>
-      <div class="diff-item"><div class="check">✓</div><span><strong>Funciona offline</strong> — sem depender de internet ou nuvem</span></div>
-      <div class="diff-item"><div class="check">✓</div><span><strong>Rede local</strong> — caixa e estoque em PCs diferentes ao mesmo tempo</span></div>
-      <div class="diff-item"><div class="check">✓</div><span><strong>Leitor de código de barras</strong> — compatível com qualquer leitor USB</span></div>
-      <div class="diff-item"><div class="check">✓</div><span><strong>Suporte personalizado</strong> — sistema adaptado para a sua distribuidora</span></div>
-      <div class="diff-item"><div class="check">✓</div><span><strong>Dados 100% seus</strong> — tudo salvo no seu computador, sem terceiros</span></div>
+<!-- PREÇO -->
+<section id="preco">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">💰 Plano</span>
+    <h2 class="section-title">Um plano simples e transparente</h2>
+    <p class="section-sub">Sem taxa de instalação. Sem surpresas.</p>
+    <div class="preco-wrapper">
+      <div class="preco-badge">🌟 MAIS ESCOLHIDO</div>
+      <div class="preco-valor">R$30</div>
+      <div class="preco-periodo">por mês · cancele quando quiser</div>
+      <ul class="preco-lista">
+        <li><span class="check">✓</span> Sistema completo instalado no seu PC</li>
+        <li><span class="check">✓</span> Pedidos, estoque, fiado e caixa</li>
+        <li><span class="check">✓</span> Relatório diário por email</li>
+        <li><span class="check">✓</span> Funciona sem internet (offline)</li>
+        <li><span class="check">✓</span> Acesso para admin + caixa</li>
+        <li><span class="check-cyan">✓</span> <strong style="color:var(--cyan)">Suporte e manutenção inclusos</strong></li>
+        <li><span class="check-cyan">✓</span> <strong style="color:var(--cyan)">Demonstração gratuita antes de assinar</strong></li>
+      </ul>
+      <a href="https://wa.me/5511985079997?text=Oi!%20Quero%20contratar%20o%20sistema%20por%20R%2430%2Fm%C3%AAs.%20Pode%20me%20passar%20mais%20detalhes?" class="btn-primary" style="width:100%;justify-content:center;">
+        💬 Quero assinar — R$30/mês
+      </a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CTA -->
-  <section class="cta">
-    <h2>Pronto para organizar sua distribuidora? 🚀</h2>
-    <p>Demonstração gratuita, sem compromisso.</p>
+<!-- SUPORTE -->
+<section class="suporte">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">🛠️ Suporte</span>
+    <h2 class="section-title">Você não fica sozinho</h2>
+    <p class="section-sub">Suporte direto pelo WhatsApp. Sem call center, sem fila.</p>
+    <div class="suporte-grid">
+      <div class="suporte-card"><div class="icon">🔧</div><h3>Manutenção inclusa</h3><p>Atualizações e correções sem custo adicional durante a assinatura.</p></div>
+      <div class="suporte-card"><div class="icon">📲</div><h3>Suporte pelo WhatsApp</h3><p>Atendimento direto com quem desenvolveu o sistema. Resposta rápida.</p></div>
+      <div class="suporte-card"><div class="icon">🎓</div><h3>Treinamento</h3><p>Treinamos você e sua equipe para usar o sistema do zero.</p></div>
+      <div class="suporte-card"><div class="icon">🎯</div><h3>Personalização</h3><p>Adaptamos o sistema para o seu negócio. Cada distribuidora tem suas necessidades.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <span class="section-label">🚀 Começar</span>
+    <h2 class="section-title" style="text-align:center;margin-bottom:10px;">Pronto para organizar sua distribuidora?</h2>
+    <p class="section-sub" style="text-align:center;">Demonstração gratuita, sem compromisso. A gente vai até você.</p>
     <div class="cta-box">
-      <a href="https://wa.me/5511985079997?text=Oi!%20Vi%20o%20sistema%20para%20distribuidoras%20e%20quero%20saber%20mais!" class="whats-btn">
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">Chama no WhatsApp agora e agende a demonstração gratuita. Sem burocracia.</p>
+      <a href="https://wa.me/5511985079997?text=Oi!%20Vi%20o%20sistema%20para%20distribuidoras%20e%20quero%20ver%20uma%20demonstra%C3%A7%C3%A3o%20gratuita!" class="whats-btn">
         💬 Falar pelo WhatsApp
       </a>
-      <p class="cta-info">Resposta rápida • Demonstração gratuita • Sem enrolação</p>
+      <p class="cta-hint">Resposta rápida · Demonstração gratuita · Sem enrolação</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer>
-    <strong>Sistema Distribuidoras</strong> — Desenvolvido com ❤️ para o comércio local
-  </footer>
+<footer>
+  <strong>Sistema Distribuidoras</strong> — Desenvolvido com ❤️ para o comércio local · R$ 30/mês com suporte incluso
+</footer>
 
 </body>
 </html>
