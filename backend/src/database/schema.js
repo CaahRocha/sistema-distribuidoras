@@ -159,14 +159,12 @@ const criarUsuariosPadrao = () => {
   if (!adminExiste) {
     const senha = bcrypt.hashSync('admin123', 10);
     db.prepare(`INSERT INTO usuarios (nome, login, senha, perfil) VALUES (?, ?, ?, ?)`).run('Administrador', 'admin', senha, 'admin');
-    console.log('✅ Usuário admin criado  →  login: admin  |  senha: admin123');
   }
 
   const caixaExiste = db.prepare('SELECT id FROM usuarios WHERE login = ?').get('caixa');
   if (!caixaExiste) {
     const senha = bcrypt.hashSync('caixa123', 10);
     db.prepare(`INSERT INTO usuarios (nome, login, senha, perfil) VALUES (?, ?, ?, ?)`).run('Caixa', 'caixa', senha, 'caixa');
-    console.log('✅ Usuário caixa criado  →  login: caixa   |  senha: caixa123');
   }
 };
 

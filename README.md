@@ -11,8 +11,6 @@ Sistema de gestão para distribuidoras de bebidas, tabacos e artigos de fumo.
 
 ## 🔐 Primeiro acesso
 
-As credenciais iniciais são exibidas no terminal quando o sistema é iniciado pela primeira vez.
-
 > ⚠️ Troque as senhas após o primeiro acesso em **Usuários → Editar**.
 
 ## 📦 Módulos

@@ -73,7 +73,7 @@ export default function Login() {
         </form>
 
         <p className="login-hint">
-          As credenciais de acesso são fornecidas pelo administrador do sistema.
+          Entre em contato com o administrador para obter seu acesso.
         </p>
       </div>
     </div>
