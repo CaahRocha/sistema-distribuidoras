@@ -13,6 +13,7 @@ import Estoque from './pages/Estoque';
 import Financeiro from './pages/Financeiro';
 import Relatorios from './pages/Relatorios';
 import Usuarios from './pages/Usuarios';
+import Configuracoes from './pages/Configuracoes';
 
 import './App.css';
 
@@ -93,6 +94,12 @@ export default function App() {
         <Route path="/usuarios" element={
           <AdminRoute>
             <Layout><Usuarios /></Layout>
+          </AdminRoute>
+        } />
+
+        <Route path="/configuracoes" element={
+          <AdminRoute>
+            <Layout><Configuracoes /></Layout>
           </AdminRoute>
         } />
 

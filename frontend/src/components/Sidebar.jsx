@@ -81,6 +81,11 @@ export function Sidebar() {
               <span className="nav-icon">⚙️</span>
               <span>Usuários</span>
             </NavLink>
+
+            <NavLink to="/configuracoes" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+              <span className="nav-icon">🔧</span>
+              <span>Configurações</span>
+            </NavLink>
           </>
         )}
       </nav>

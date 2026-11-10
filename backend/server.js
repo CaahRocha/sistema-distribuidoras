@@ -20,6 +20,7 @@ app.use('/api/pedidos', require('./src/routes/pedidos'));
 app.use('/api/estoque', require('./src/routes/estoque'));
 app.use('/api/financeiro', require('./src/routes/financeiro'));
 app.use('/api/relatorios', require('./src/routes/relatorios'));
+app.use('/api/configuracoes', require('./src/routes/configuracoes'));
 
 // Servir o frontend (build do React/Vite)
 const frontendDist = path.join(__dirname, '../frontend/dist');

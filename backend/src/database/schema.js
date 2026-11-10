@@ -187,6 +187,16 @@ const migracoes = () => {
     db.exec('ALTER TABLE produtos ADD COLUMN codigo_barras TEXT');
     console.log('✅ Migração: coluna codigo_barras adicionada.');
   } catch (e) { /* coluna já existe */ }
+
+  // Tabela de configurações do sistema
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS configuracoes (
+      id   INTEGER PRIMARY KEY AUTOINCREMENT,
+      chave TEXT UNIQUE NOT NULL,
+      valor TEXT,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
 };
 migracoes();
 

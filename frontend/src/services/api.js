@@ -115,7 +115,12 @@ export const financeiroService = {
   registrarSaida: (dados) => api.post('/financeiro/caixa/saida', dados)
 };
 
-// ==================== RELATÓRIOS ====================
+// ==================== CONFIGURAÇÕES ====================
+export const configuracoesService = {
+  get: () => api.get('/configuracoes'),
+  salvar: (dados) => api.post('/configuracoes', dados),
+  enviarRelatorio: (data) => api.post(`/configuracoes/enviar-relatorio${data ? '?data=' + data : ''}`)
+};
 export const relatoriosService = {
   dashboard: () => api.get('/relatorios/dashboard'),
   vendas: (params = {}) => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { financeiroService } from '../services/api';
+import { financeiroService, configuracoesService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 const formatarMoeda = (v) => `R$ ${(v || 0).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`;
@@ -14,6 +14,8 @@ export default function Financeiro() {
   const [dataCaixa, setDataCaixa] = useState(new Date().toISOString().split('T')[0]);
   const [modalPagar, setModalPagar] = useState(false);
   const [modalSaida, setModalSaida] = useState(false);
+  const [enviandoEmail, setEnviandoEmail] = useState(false);
+  const [msgEmail, setMsgEmail] = useState(null);
   const [fiadoSelecionado, setFiadoSelecionado] = useState(null);
   const [valorPagamento, setValorPagamento] = useState('');
   const [observacaoPagamento, setObservacaoPagamento] = useState('');
@@ -66,8 +68,20 @@ export default function Financeiro() {
     }
   };
 
-  const handleSaida = async (e) => {
-    e.preventDefault();
+  const handleEnviarRelatorio = async () => {
+    setEnviandoEmail(true);
+    setMsgEmail(null);
+    try {
+      const r = await configuracoesService.enviarRelatorio(dataCaixa);
+      setMsgEmail({ tipo: 'success', texto: r.mensagem });
+    } catch (err) {
+      setMsgEmail({ tipo: 'error', texto: err.message });
+    } finally {
+      setEnviandoEmail(false);
+    }
+  };
+
+  const handleSaida = async (e) => {    e.preventDefault();
     setErro('');
     try {
       await financeiroService.registrarSaida({
@@ -94,9 +108,14 @@ export default function Financeiro() {
           <p className="page-subtitle">Fiado e controle de caixa</p>
         </div>
         {aba === 'caixa' && isAdmin() && (
-          <button className="btn btn-danger" onClick={() => { setErro(''); setModalSaida(true); }}>
-            ↓ Registrar Saída
-          </button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button className="btn btn-outline" onClick={handleEnviarRelatorio} disabled={enviandoEmail}>
+              {enviandoEmail ? '📧 Enviando...' : '📧 Enviar Relatório por Email'}
+            </button>
+            <button className="btn btn-danger" onClick={() => { setErro(''); setModalSaida(true); }}>
+              ↓ Registrar Saída
+            </button>
+          </div>
         )}
       </div>
 
@@ -192,6 +211,11 @@ export default function Financeiro() {
         {/* Aba Caixa */}
         {aba === 'caixa' && (
           <div>
+            {msgEmail && (
+              <div className={`alert alert-${msgEmail.tipo === 'success' ? 'success' : 'danger'}`} style={{ marginBottom: '12px' }}>
+                {msgEmail.tipo === 'success' ? '✅ ' : '❌ '}{msgEmail.texto}
+              </div>
+            )}
             <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', alignItems: 'center' }}>
               <label className="form-label" style={{ margin: 0 }}>Data:</label>
               <input
