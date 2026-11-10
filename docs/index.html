@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema para Distribuidoras | Gestão Completa</title>
+  <meta name="description" content="Sistema completo para distribuidoras de bebidas, tabacos e artigos de fumo. Controle pedidos, estoque, fiado e caixa. Sem mensalidade, funciona offline." />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #1a56db;
+      --dark: #1e2a3a;
+      --text: #2d3748;
+      --light: #f0f4f8;
+      --white: #ffffff;
+      --success: #38a169;
+      --accent: #f6ad55;
+    }
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1e2a3a 0%, #1a56db 100%);
+      color: white;
+      padding: 60px 20px 80px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      font-size: clamp(15px, 2.5vw, 18px);
+      opacity: 0.85;
+      max-width: 560px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-hero {
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-whats { background: #25D366; color: white; }
+    .btn-whats:hover { background: #128C7E; }
+    .btn-outline { background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.4); }
+    .btn-outline:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── DOR ── */
+    .dor-section {
+      background: #fff8f0;
+      padding: 60px 20px;
+      text-align: center;
+      border-top: 4px solid var(--accent);
+    }
+    .dor-section h2 { font-size: 26px; color: var(--dark); margin-bottom: 8px; }
+    .dor-section p { color: #666; margin-bottom: 36px; font-size: 15px; }
+    .dor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .dor-card {
+      background: white;
+      border: 2px solid #fed7aa;
+      border-radius: 12px;
+      padding: 20px 16px;
+      font-size: 14px;
+      color: #744210;
+    }
+    .dor-card .emoji { font-size: 32px; margin-bottom: 10px; }
+    .dor-card strong { display: block; font-size: 15px; margin-bottom: 4px; }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 70px 20px;
+      text-align: center;
+      background: var(--white);
+    }
+    .section-label {
+      display: inline-block;
+      background: #e8f0fe;
+      color: var(--primary);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .features h2 { font-size: 30px; color: var(--dark); margin-bottom: 8px; }
+    .features > p { color: #666; margin-bottom: 48px; font-size: 15px; }
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .feat-card {
+      background: var(--light);
+      border-radius: 14px;
+      padding: 28px 22px;
+      text-align: left;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+    .feat-icon { font-size: 36px; margin-bottom: 14px; display: block; }
+    .feat-card h3 { font-size: 16px; color: var(--dark); margin-bottom: 6px; }
+    .feat-card p { font-size: 13px; color: #555; line-height: 1.6; }
+
+    /* ── COMO FUNCIONA ── */
+    .how {
+      background: var(--dark);
+      color: white;
+      padding: 70px 20px;
+      text-align: center;
+    }
+    .how h2 { font-size: 28px; margin-bottom: 8px; }
+    .how > p { opacity: 0.7; margin-bottom: 48px; font-size: 15px; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .step { background: rgba(255,255,255,0.07); border-radius: 14px; padding: 28px 20px; }
+    .step-num {
+      width: 40px; height: 40px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 18px;
+      margin: 0 auto 14px;
+    }
+    .step h3 { font-size: 15px; margin-bottom: 8px; }
+    .step p { font-size: 13px; opacity: 0.7; line-height: 1.5; }
+
+    /* ── DIFERENCIAIS ── */
+    .diffs { padding: 60px 20px; background: var(--light); text-align: center; }
+    .diffs h2 { font-size: 26px; color: var(--dark); margin-bottom: 36px; }
+    .diff-list {
+      display: flex; flex-direction: column; gap: 12px;
+      max-width: 600px; margin: 0 auto;
+    }
+    .diff-item {
+      display: flex; align-items: center; gap: 14px;
+      background: white; padding: 16px 20px;
+      border-radius: 10px; text-align: left;
+      font-size: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .diff-item .check {
+      width: 28px; height: 28px; min-width: 28px;
+      background: var(--success); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 14px; font-weight: 700;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      background: linear-gradient(135deg, #1a56db, #0f3fa8);
+      color: white; padding: 70px 20px; text-align: center;
+    }
+    .cta h2 { font-size: 30px; margin-bottom: 10px; }
+    .cta p { opacity: 0.85; margin-bottom: 32px; font-size: 16px; }
+    .cta-box {
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 32px;
+      max-width: 440px; margin: 0 auto;
+    }
+    .whats-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #25D366; color: white;
+      padding: 16px 32px; border-radius: 10px;
+      font-size: 17px; font-weight: 700;
+      text-decoration: none; margin-bottom: 16px;
+      width: 100%; justify-content: center;
+      transition: background 0.2s;
+    }
+    .whats-btn:hover { background: #128C7E; }
+    .cta-info { font-size: 13px; opacity: 0.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111; color: rgba(255,255,255,0.4);
+      text-align: center; padding: 24px 20px; font-size: 13px;
+    }
+    footer strong { color: rgba(255,255,255,0.7); }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">🏪 Feito para distribuidoras do bairro</div>
+    <h1>Chega de caderno.<br>Sua distribuidora no <span>digital</span>.</h1>
+    <p>Sistema completo para controlar pedidos, estoque, fiado e caixa. Funciona offline, sem mensalidade e roda em qualquer computador.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5511985079997?text=Oi!%20Quero%20uma%20demonstra%C3%A7%C3%A3o%20do%20sistema%20para%20distribuidoras." class="btn-hero btn-whats">
+        💬 Pedir demonstração grátis
+      </a>
+      <a href="https://github.com/CaahRocha/sistema-distribuidoras" class="btn-hero btn-outline" target="_blank">
+        👩‍💻 Ver no GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- DOR -->
+  <section class="dor-section">
+    <h2>Sua distribuidora ainda sofre com isso? 😩</h2>
+    <p>Muitas distribuidoras da região ainda controlam tudo no caderno. Isso gera prejuízo.</p>
+    <div class="dor-grid">
+      <div class="dor-card">
+        <div class="emoji">📓</div>
+        <strong>Caderno de fiado</strong>
+        Nunca sabe ao certo quanto cada cliente deve
+      </div>
+      <div class="dor-card">
+        <div class="emoji">📦</div>
+        <strong>Estoque no olho</strong>
+        Perde venda por não saber o que tem em estoque
+      </div>
+      <div class="dor-card">
+        <div class="emoji">🤯</div>
+        <strong>Sem relatório</strong>
+        Não sabe quanto faturou no mês ou o que mais vende
+      </div>
+      <div class="dor-card">
+        <div class="emoji">💸</div>
+        <strong>Caixa bagunçado</strong>
+        Dinheiro some sem saber de onde entrou ou saiu
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <span class="section-label">✅ Funcionalidades</span>
+    <h2>Tudo que sua distribuidora precisa</h2>
+    <p>Sistema completo, simples de usar e sem custo de mensalidade.</p>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <span class="feat-icon">🛒</span>
+        <h3>Pedidos rápidos</h3>
+        <p>Registre pedidos com código de barras ou busca por nome. Fecha em segundos com dinheiro, pix, cartão ou fiado.</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-icon">📦</span>
+        <h3>Estoque automático</h3>
+        <p>A cada pedido fechado o estoque baixa sozinho. Alerta quando o produto está acabando.</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-icon">📋</span>
+        <h3>Fiado organizado</h3>
+        <p>Veja quanto cada cliente deve, registre pagamentos parciais e controle o limite de crédito.</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-icon">💰</span>
+        <h3>Caixa do dia</h3>
+        <p>Acompanhe entradas e saídas. Saldo em tempo real separado por forma de pagamento.</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-icon">📊</span>
+        <h3>Relatórios completos</h3>
+        <p>Vendas por período, produtos mais vendidos, valor do estoque e clientes com fiado em aberto.</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-icon">👥</span>
+        <h3>Acesso por perfil</h3>
+        <p>Perfil Admin e Caixa com permissões separadas. Admin vê tudo, caixa só opera o dia a dia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="how">
+    <h2>Como funciona?</h2>
+    <p>Instalação simples, sem internet, sem mensalidade.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Instala uma vez</h3>
+        <p>Roda no computador da distribuidora. Sem internet necessária para funcionar.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Cadastra os produtos</h3>
+        <p>Com nome, preço, estoque e código de barras. Categorias como bebidas, cigarros, tabacos.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Começa a usar</h3>
+        <p>Abre pedido, bipa os produtos, fecha com pagamento. Outros PCs da rede também acessam.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section class="diffs">
+    <h2>Por que escolher este sistema?</h2>
+    <div class="diff-list">
+      <div class="diff-item"><div class="check">✓</div><span><strong>Sem mensalidade</strong> — pagamento único, sem surpresas no bolso</span></div>
+      <div class="diff-item"><div class="check">✓</div><span><strong>Funciona offline</strong> — sem depender de internet ou nuvem</span></div>
+      <div class="diff-item"><div class="check">✓</div><span><strong>Rede local</strong> — caixa e estoque em PCs diferentes ao mesmo tempo</span></div>
+      <div class="diff-item"><div class="check">✓</div><span><strong>Leitor de código de barras</strong> — compatível com qualquer leitor USB</span></div>
+      <div class="diff-item"><div class="check">✓</div><span><strong>Suporte personalizado</strong> — sistema adaptado para a sua distribuidora</span></div>
+      <div class="diff-item"><div class="check">✓</div><span><strong>Dados 100% seus</strong> — tudo salvo no seu computador, sem terceiros</span></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Pronto para organizar sua distribuidora? 🚀</h2>
+    <p>Demonstração gratuita, sem compromisso.</p>
+    <div class="cta-box">
+      <a href="https://wa.me/5511985079997?text=Oi!%20Vi%20o%20sistema%20para%20distribuidoras%20e%20quero%20saber%20mais!" class="whats-btn">
+        💬 Falar pelo WhatsApp
+      </a>
+      <p class="cta-info">Resposta rápida • Demonstração gratuita • Sem enrolação</p>
+    </div>
+  </section>
+
+  <footer>
+    <strong>Sistema Distribuidoras</strong> — Desenvolvido com ❤️ para o comércio local
+  </footer>
+
+</body>
+</html>
