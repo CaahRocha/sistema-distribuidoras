@@ -9,17 +9,15 @@ Sistema de gestão para distribuidoras de bebidas, tabacos e artigos de fumo.
 3. Execute o `INICIAR.bat` para iniciar o servidor
 4. Acesse no navegador: **http://localhost:3001**
 
-## 🔐 Acesso padrão
+## 🔐 Primeiro acesso
 
-| Usuário | E-mail | Senha |
-|---|---|---|
-| Administrador | admin@distribuidora.com | admin123 |
+As credenciais iniciais são exibidas no terminal quando o sistema é iniciado pela primeira vez.
 
-> ⚠️ Troque a senha do admin após o primeiro acesso!
+> ⚠️ Troque as senhas após o primeiro acesso em **Usuários → Editar**.
 
 ## 📦 Módulos
 
-- **Dashboard** — Resumo geral: vendas do dia, caixa, alertas
+- **Início** — Resumo geral: vendas do dia, caixa, alertas
 - **Pedidos** — Criar e fechar pedidos, com baixa automática de estoque
 - **Clientes** — Cadastro de clientes com controle de fiado
 - **Produtos** — Cadastro de produtos com categorias *(admin)*

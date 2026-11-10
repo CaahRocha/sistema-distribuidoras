@@ -72,10 +72,9 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="login-hint">
-          <p><strong>admin</strong> → senha: admin123</p>
-          <p><strong>caixa</strong> → senha: caixa123</p>
-        </div>
+        <p className="login-hint">
+          As credenciais de acesso são fornecidas pelo administrador do sistema.
+        </p>
       </div>
     </div>
   );
