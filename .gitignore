@@ -27,5 +27,6 @@ desktop.ini
 
 # IDE
 .vscode/
+.kiro/
 *.suo
 *.user
