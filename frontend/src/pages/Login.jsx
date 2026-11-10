@@ -32,7 +32,7 @@ export default function Login() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-header">
-          <div className="login-logo">🏪</div>
+          <img src="/logo.svg" alt="Logo Distribuidora" style={{ width: '90px', height: '90px', marginBottom: '12px' }} />
           <h1 className="login-title">Sistema Distribuidoras</h1>
           <p className="login-subtitle">Faça login para continuar</p>
         </div>

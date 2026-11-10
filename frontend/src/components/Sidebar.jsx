@@ -15,7 +15,7 @@ export function Sidebar() {
     <aside className="sidebar">
       {/* Logo / Título */}
       <div className="sidebar-header">
-        <div className="sidebar-logo">🏪</div>
+        <img src="/logo.svg" alt="Logo" style={{ width: '44px', height: '44px', flexShrink: 0 }} />
         <div>
           <h1 className="sidebar-title">Distribuidora</h1>
           <p className="sidebar-subtitle">Sistema de Gestão</p>

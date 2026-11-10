@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <filter id="g" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="32" height="32" fill="#07101d" rx="6"/>
+  <!-- Garrafa -->
+  <line x1="10" y1="4" x2="10" y2="8" stroke="#39ff14" stroke-width="1.5" filter="url(#g)" stroke-linecap="round"/>
+  <path d="M10 8 Q6 12 6 18 L14 18 Q14 12 10 8" fill="none" stroke="#39ff14" stroke-width="1.5" filter="url(#g)"/>
+  <line x1="6" y1="18" x2="6" y2="28" stroke="#39ff14" stroke-width="1.5" filter="url(#g)"/>
+  <line x1="14" y1="18" x2="14" y2="28" stroke="#39ff14" stroke-width="1.5" filter="url(#g)"/>
+  <line x1="6" y1="28" x2="14" y2="28" stroke="#39ff14" stroke-width="1.5" filter="url(#g)"/>
+  <!-- Caneca -->
+  <path d="M18 10 L18 28 L28 28 L28 10 Z" fill="none" stroke="#00d4ff" stroke-width="1.5" filter="url(#g)" stroke-linejoin="round"/>
+  <path d="M28 15 C33 15 33 24 28 24" fill="none" stroke="#00d4ff" stroke-width="1.5" filter="url(#g)" stroke-linecap="round"/>
+  <path d="M17 10 Q21 5 25 10" fill="none" stroke="white" stroke-width="1.5" filter="url(#g)" stroke-linecap="round"/>
+</svg>
