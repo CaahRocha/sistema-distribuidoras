@@ -25,8 +25,7 @@ npm-debug.log*
 Thumbs.db
 desktop.ini
 
-# IDE
-.vscode/
-.kiro/
+# Ferramentas internas (nao vai para o cliente)
+ferramentas/
 *.suo
 *.user

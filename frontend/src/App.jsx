@@ -1,7 +1,9 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute, AdminRoute } from './components/ProtectedRoute';
 import { Sidebar } from './components/Sidebar';
+import LicencaExpirada from './pages/LicencaExpirada';
 
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -29,6 +31,18 @@ function Layout({ children }) {
 }
 
 export default function App() {
+  const [licencaExpirada, setLicencaExpirada] = useState(false);
+
+  // Escuta o evento global de licença expirada
+  useEffect(() => {
+    const handler = () => setLicencaExpirada(true);
+    window.addEventListener('licenca-expirada', handler);
+    return () => window.removeEventListener('licenca-expirada', handler);
+  }, []);
+
+  // Tela de bloqueio — aparece por cima de tudo
+  if (licencaExpirada) return <LicencaExpirada />;
+
   return (
     <AuthProvider>
       <Routes>

@@ -11,8 +11,17 @@ app.use(express.json());
 // Inicializar banco de dados e criar tabelas
 require('./src/database/schema');
 
-// Rotas da API
+// Middleware de verificação de licença (antes das rotas protegidas)
+const { verificarLicenca } = require('./src/middleware/licenca');
+
+// Rotas públicas (sem verificação de licença)
+app.use('/api/licenca', require('./src/routes/licenca'));
 app.use('/api/auth', require('./src/routes/auth'));
+
+// Verificar licença em todas as rotas abaixo
+app.use('/api', verificarLicenca);
+
+// Rotas protegidas
 app.use('/api/usuarios', require('./src/routes/usuarios'));
 app.use('/api/produtos', require('./src/routes/produtos'));
 app.use('/api/clientes', require('./src/routes/clientes'));

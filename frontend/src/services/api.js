@@ -17,6 +17,13 @@ const request = async (method, url, body = null) => {
   }
 
   const response = await fetch(`${BASE_URL}${url}`, config);
+
+  // Licença expirada — dispara evento global
+  if (response.status === 402) {
+    window.dispatchEvent(new CustomEvent('licenca-expirada'));
+    throw new Error('licenca_expirada');
+  }
+
   const data = await response.json();
 
   if (!response.ok) {

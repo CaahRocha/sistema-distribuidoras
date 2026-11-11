@@ -168,8 +168,17 @@ const criarUsuariosPadrao = () => {
   }
 };
 
-// Criar categorias padrão
-const criarCategoriasPadrao = () => {
+// Inicializar licença padrão de 30 dias se for a primeira instalação
+const criarLicencaInicial = () => {
+  const licencaExiste = db.prepare("SELECT id FROM configuracoes WHERE chave = 'licenca_expira'").get();
+  if (!licencaExiste) {
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 30);
+    const dataExpiry = expiry.toISOString().split('T')[0];
+    db.prepare(`INSERT INTO configuracoes (chave, valor) VALUES ('licenca_expira', ?)`).run(dataExpiry);
+    console.log(`✅ Licença inicial: válida por 30 dias até ${dataExpiry}`);
+  }
+};
   const categorias = ['Bebidas Alcoólicas', 'Bebidas Não Alcoólicas', 'Cigarros', 'Tabacos', 'Artigos de Fumo', 'Outros'];
   const inserir = db.prepare('INSERT OR IGNORE INTO categorias (nome) VALUES (?)');
   categorias.forEach(cat => inserir.run(cat));
@@ -180,6 +189,7 @@ const criarCategoriasPadrao = () => {
 criarTabelas();
 criarUsuariosPadrao();
 criarCategoriasPadrao();
+criarLicencaInicial();
 
 // Migrações: adicionar colunas novas sem quebrar banco existente
 const migracoes = () => {
