@@ -179,6 +179,9 @@ const criarLicencaInicial = () => {
     console.log(`✅ Licença inicial: válida por 30 dias até ${dataExpiry}`);
   }
 };
+
+// Criar categorias padrão
+const criarCategoriasPadrao = () => {
   const categorias = ['Bebidas Alcoólicas', 'Bebidas Não Alcoólicas', 'Cigarros', 'Tabacos', 'Artigos de Fumo', 'Outros'];
   const inserir = db.prepare('INSERT OR IGNORE INTO categorias (nome) VALUES (?)');
   categorias.forEach(cat => inserir.run(cat));
