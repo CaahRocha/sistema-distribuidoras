@@ -38,14 +38,18 @@ const renovar = (req, res) => {
     return res.status(400).json({ erro: 'Código e data são obrigatórios' });
   }
 
+  // Limpar espaços acidentais
+  const dataLimpa = data_expira.trim();
+  const codigoLimpo = codigo.trim().toUpperCase();
+
   // Validar formato AAAA-MM-DD
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(data_expira)) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dataLimpa)) {
     return res.status(400).json({ erro: 'Data inválida. Use o formato AAAA-MM-DD' });
   }
 
-  const codigoEsperado = gerarCodigo(data_expira);
+  const codigoEsperado = gerarCodigo(dataLimpa);
 
-  if (codigo.trim().toUpperCase() !== codigoEsperado) {
+  if (codigoLimpo !== codigoEsperado) {
     return res.status(400).json({ erro: 'Código inválido. Verifique e tente novamente.' });
   }
 
@@ -53,9 +57,9 @@ const renovar = (req, res) => {
     INSERT INTO configuracoes (chave, valor)
     VALUES ('licenca_expira', ?)
     ON CONFLICT(chave) DO UPDATE SET valor = excluded.valor, updated_at = CURRENT_TIMESTAMP
-  `).run(data_expira);
+  `).run(dataLimpa);
 
-  const dataFormatada = new Date(data_expira + 'T12:00:00').toLocaleDateString('pt-BR');
+  const dataFormatada = new Date(dataLimpa + 'T12:00:00').toLocaleDateString('pt-BR');
   res.json({ mensagem: `✅ Licença renovada com sucesso até ${dataFormatada}!` });
 };
 
